@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  rental_app_12:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    mem_limit: 4024M
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - rental_db_12
+      - mailhog
+    environment:
+      - DB_HOST=rental_db_12
+      - DB_DATABASE=house_rental
+      - DB_USERNAME=root
+      - DB_PASSWORD=root_password
+      - MAIL_MAILER=smtp
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - MAIL_FROM_ADDRESS=hello@example.com
+      - MAIL_FROM_NAME="${APP_NAME}"
+
+  rental_db_12:
+    image: mariadb:10.5.8
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=house_rental
+      - MYSQL_ROOT_PASSWORD=root_password
+      - DB_PORT=3306
+    volumes:
+      - pgd_rental_maria_data:/var/lib/mysql
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
+volumes:
+  pgd_rental_maria_data: 
