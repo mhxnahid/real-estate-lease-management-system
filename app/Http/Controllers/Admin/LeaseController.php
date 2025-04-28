@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Lease;
 use App\Models\User;
+use App\Models\Lease;
 use App\Models\Property;
-use App\Models\LandlordTenant;
 use Illuminate\Http\Request;
+use App\Models\LandlordTenant;
 use App\Http\Controllers\Controller;
+use App\Notifications\LeaseNotification;
 
 
 class LeaseController extends Controller
@@ -28,7 +29,7 @@ class LeaseController extends Controller
 
         $tenant_ids = LandlordTenant::where('landlord_id', auth()->user()->id)->where('active', 1)->pluck('tenant_id');
         $tenants = User::whereIn('id', $tenant_ids)->get();
-        
+
         return view('admin.leases.create', compact('tenants', 'properties'));
     }
 
@@ -47,6 +48,12 @@ class LeaseController extends Controller
         $lease = Lease::create($request->all() + ['landlord_id' => auth()->user()->id]);
         $lease->document_ref = $request->file('document_ref')->store('leases', 'public');
         $lease->save();
+
+        try {
+            $lease->tenant->notify(new LeaseNotification($lease->landlord));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send invitation notification: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.leases.index');
     }

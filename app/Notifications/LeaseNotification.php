@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class InvitationSend extends Notification
+class LeaseNotification extends Notification
 {
     use Queueable;
 
@@ -16,11 +16,9 @@ class InvitationSend extends Notification
      *
      * @return void
      */
-    public function __construct($landlord, $lt, $token)
+    public function __construct($landlord)
     {
         $this->landlord = $landlord;
-        $this->lt = $lt;
-        $this->token = $token;
     }
 
     /**
@@ -43,10 +41,9 @@ class InvitationSend extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("You are invited to RELMS")
-                    ->line('Hello, you are invited into RELMS. Please confirm your registration')
+                    ->subject("Review and accept lease at RELMS")
+                    ->line('Hello, you have a pending lease. Please confirm your lease')
                     ->line('Landlord: ' . $this->landlord->name)
-                    ->action('Accept Invitation', route('auth.invitation', [$this->token, $notifiable->id, $this->lt->id]))
                     ->line('Thank you for using our application!');
     }
 
