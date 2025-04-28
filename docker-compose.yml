@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+      - "8081:8081"
+    command: php artisan octane:start --host=0.0.0.0 --port=8081
     mem_limit: 4024M
     volumes:
       - .:/var/www/html
@@ -42,4 +44,4 @@ services:
       - "1025:1025"
 
 volumes:
-  pgd_rental_maria_data: 
+  pgd_rental_maria_data:

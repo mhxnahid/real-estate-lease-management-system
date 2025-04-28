@@ -10,9 +10,11 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
-    libjpeg-dev libpng-dev libfreetype6-dev \
+    libjpeg-dev libpng-dev libfreetype6-dev libcurl4-openssl-dev \
     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd
+    && docker-php-ext-install gd \
+    && pecl install swoole \
+    && docker-php-ext-enable swoole
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -25,7 +27,6 @@ RUN docker-php-ext-install pdo_mysql mysqli mbstring exif pcntl bcmath zip
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-
 # Enable Apache modules
 RUN a2enmod rewrite
 
@@ -34,6 +35,12 @@ WORKDIR /var/www/html
 
 # Copy application files
 COPY . /var/www/html/
+
+# Install Laravel Octane
+# RUN composer require laravel/octane
+
+# Set Octane memory limit
+ENV OCTANE_MEMORY_LIMIT=-1
 
 # Set Composer memory limit
 ENV COMPOSER_MEMORY_LIMIT=-1
@@ -56,4 +63,7 @@ RUN echo "<VirtualHost *:80>\n\
 </VirtualHost>" > /etc/apache2/sites-available/000-default.conf
 
 # Set ServerName
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Configure Octane to use Swoole
+# RUN echo "APP_SERVER=swoole" >> .env
