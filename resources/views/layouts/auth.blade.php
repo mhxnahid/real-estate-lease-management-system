@@ -5,7 +5,7 @@
     @include('partials.head')
     <style>
     .background-box {
-        background-image: url('https://www.whitecase.com/sites/default/files/styles/original_image/public/images/hero/2024/03/2024-real-estate-market-sentiment-survey-hero.jpg?itok=ggRx37lY'); /* Update with your image path */
+        background-image: url('/2024-real-estate-market-sentiment-survey-hero.jpg');
         background-size: cover;
         background-position: center;
         height: 100vh;
