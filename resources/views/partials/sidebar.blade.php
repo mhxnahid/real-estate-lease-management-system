@@ -22,7 +22,7 @@
                 </a>
             </li>
 
-            
+
             @can('user_management_access')
             <li class="treeview">
                 <a href="#">
@@ -33,7 +33,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                
+
                 @can('permission_access')
                 <li class="{{ $request->segment(2) == 'permissions' ? 'active active-sub' : '' }}">
                         <a href="{{ route('admin.permissions.index') }}">
@@ -100,7 +100,7 @@
                     </a>
                 </li>
             @endcan
-            
+
             @can('document_access')
             <li class="{{ $request->segment(2) == 'documents' ? 'active' : '' }}">
                 <a href="{{ route('admin.documents.index') }}">
@@ -109,7 +109,7 @@
                 </a>
             </li>
             @endcan
-            
+
             @can('note_access')
             <li class="{{ $request->segment(2) == 'notes' ? 'active' : '' }}">
                 <a href="{{ route('admin.notes.index') }}">
@@ -118,11 +118,11 @@
                 </a>
             </li>
             @endcan
-            
 
-            
 
-            
+
+
+            @can('messenger_access')
             @php ($unread = App\Models\MessengerTopic::countUnread())
             <li class="{{ $request->segment(2) == 'messenger' ? 'active' : '' }} {{ ($unread > 0 ? 'unread' : '') }}">
                 <a href="{{ route('admin.messenger.index') }}">
@@ -139,6 +139,7 @@
                     font-weight:bold !important;
                 }
             </style>
+            @endcan
 
 
 

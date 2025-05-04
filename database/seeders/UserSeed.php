@@ -14,13 +14,13 @@ class UserSeed extends Seeder
     public function run()
     {
         $items = [
-            
+
             ['id' => 1, 'name' => 'Admin', 'email' => 'admin@admin.com', 'password' => 'password', 'remember_token' => '',],
 
         ];
 
         foreach ($items as $item) {
-            \App\Models\User::firstOrCreate($item);
+            \App\Models\User::firstOrCreate(['email' => $item['email']], $item);
         }
     }
 }
