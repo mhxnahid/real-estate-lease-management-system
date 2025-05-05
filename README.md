@@ -1,6 +1,7 @@
-### RELMS Conf
+### RELMS Stack
 php 8.2, Laravel 12, Apache, MariaDB 10.5
 ### Install Docker
+### Clone this repository
 Run application
 ```
 docker-compose up
