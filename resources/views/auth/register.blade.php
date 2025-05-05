@@ -7,7 +7,7 @@
 @section('content')
     <div class="auth-box reg-box">
         <h3 class="panel-title">@lang('global.app_registration')</h3>
-        
+
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>@lang('global.app_whoops')</strong> @lang('global.app_there_were_problems_with_input'):
@@ -43,7 +43,7 @@
                 @endif
             </div>
 
-            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+            {{-- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label for="password" class="control-label">@lang('global.app_password')</label>
                 <input id="password" type="password" class="form-control" name="password" required>
                 @if ($errors->has('password'))
@@ -56,7 +56,7 @@
             <div class="form-group">
                 <label for="password-confirm" class="control-label">@lang('global.app_confirm_password')</label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <div class="">

@@ -22,12 +22,14 @@ Route::post('password/reset', '\App\Http\Controllers\Auth\ResetPasswordControlle
 // Registration Routes..
 Route::get('register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('auth.register');
 Route::post('register', '\App\Http\Controllers\Auth\RegisterController@register')->name('auth.register');
+Route::get('verify_message', '\App\Http\Controllers\Auth\RegisterController@verify_message')->name('auth.verify_message');
+Route::get('verify/{invitation_token}', '\App\Http\Controllers\Auth\RegisterController@verify')->name('auth.verify');
 
 Route::get('invitation/{invitation_token}/{user}/{lt}', '\App\Http\Controllers\Auth\RegisterController@processInvitation')->name('auth.invitation');
 
 Route::group(['middleware' => ['auth', 'check_invitation'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', '\App\Http\Controllers\HomeController@index');
-    
+
     Route::resource('permissions', '\App\Http\Controllers\Admin\PermissionsController');
     Route::post('permissions_mass_destroy', ['uses' => '\App\Http\Controllers\Admin\PermissionsController@massDestroy', 'as' => 'permissions.mass_destroy']);
     Route::resource('roles', '\App\Http\Controllers\Admin\RolesController');
@@ -57,5 +59,5 @@ Route::group(['middleware' => ['auth', 'check_invitation'], 'prefix' => 'admin',
 
     Route::resource('leases', '\App\Http\Controllers\Admin\LeaseController');
     Route::post('leases/accept_lease/{lease}', '\App\Http\Controllers\Admin\LeaseController@acceptLease')->name('leases.accept_lease');
- 
+
 });

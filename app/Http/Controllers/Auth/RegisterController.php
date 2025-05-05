@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Str;
+use App\Models\LandlordTenant;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\VerifyLandlord;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Models\LandlordTenant;
 
 class RegisterController extends Controller
 {
@@ -29,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    protected $redirectTo = '/verify_message';
 
     /**
      * Create a new controller instance.
@@ -52,7 +55,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            // 'password' => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -67,13 +70,46 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt(Str::random(8)),
+            'invitation_token' => substr(md5(rand(0, 9) . $data['email'] . time()), 0, 32),
         ]);
 
         $user->role()->attach(2);
 
+        try {
+            $user->notify(new VerifyLandlord());
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send invitation notification: ' . $e->getMessage());
+        }
+
         return $user;
 
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $this->create($request->all());
+
+        return redirect($this->redirectTo);
+    }
+
+    public function verify_message()
+    {
+        return view('auth.verify_message');
+    }
+
+    public function verify($invitation_token)
+    {
+        $user = User::where('invitation_token', $invitation_token)->where('verified_at', null)->firstOrFail();
+
+        $user->verified_at = now();
+        $user->save();
+
+        Auth::loginUsingId($user->id);
+
+        return redirect()->route('auth.change_password');
     }
 
     public function processInvitation($invitation_token, User $user, LandlordTenant $lt)
