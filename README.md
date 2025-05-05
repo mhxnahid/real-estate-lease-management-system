@@ -9,3 +9,7 @@ composer install
 php artisan migrate
 php artisan db:seed
 ```
+Run application
+```
+docker-compose up
+```
