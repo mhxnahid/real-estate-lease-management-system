@@ -8,23 +8,11 @@ services:
     ports:
       - "8080:80"
       - "8081:8081"
-    command: php artisan octane:start --host=0.0.0.0 --port=8081
-    mem_limit: 4024M
     volumes:
       - .:/var/www/html
     depends_on:
       - rental_db_12
       - mailhog
-    environment:
-      - DB_HOST=rental_db_12
-      - DB_DATABASE=house_rental
-      - DB_USERNAME=root
-      - DB_PASSWORD=root_password
-      - MAIL_MAILER=smtp
-      - MAIL_HOST=mailhog
-      - MAIL_PORT=1025
-      - MAIL_FROM_ADDRESS=hello@example.com
-      - MAIL_FROM_NAME="${APP_NAME}"
 
   rental_db_12:
     image: mariadb:10.5.8

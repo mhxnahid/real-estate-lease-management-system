@@ -12,9 +12,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libjpeg-dev libpng-dev libfreetype6-dev libcurl4-openssl-dev \
     && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd \
-    && pecl install swoole \
-    && docker-php-ext-enable swoole
+    && docker-php-ext-install gd
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -39,9 +37,6 @@ COPY . /var/www/html/
 # Install Laravel Octane
 # RUN composer require laravel/octane
 
-# Set Octane memory limit
-ENV OCTANE_MEMORY_LIMIT=-1
-
 # Set Composer memory limit
 ENV COMPOSER_MEMORY_LIMIT=-1
 
@@ -64,6 +59,3 @@ RUN echo "<VirtualHost *:80>\n\
 
 # Set ServerName
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-# Configure Octane to use Swoole
-# RUN echo "APP_SERVER=swoole" >> .env

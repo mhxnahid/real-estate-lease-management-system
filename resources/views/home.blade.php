@@ -6,7 +6,7 @@
 
         <div class="panel-body">
             <div class="d-flex justify-content-between">
-                @if ($totalLandlords !== null)                            
+                @if ($totalLandlords !== null)
                     <div class="flex-item">
                         <div class="small-box bg-aqua">
                             <div class="inner">
@@ -20,8 +20,8 @@
                         </div>
                     </div>
                 @endif
-                
-                @if ($totalTenants !== null)   
+
+                @if ($totalTenants !== null)
                     <div class="flex-item">
                         <div class="small-box bg-green">
                             <div class="inner">
@@ -35,8 +35,8 @@
                         </div>
                     </div>
                 @endif
-                
-                @if ($totalProperties !== null)   
+
+                @if ($totalProperties !== null)
                     <div class="flex-item">
                         <div class="small-box bg-yellow">
                             <div class="inner">
@@ -50,8 +50,8 @@
                         </div>
                     </div>
                 @endif
-                
-                @if ($totalLeases !== null)   
+
+                @if ($totalLeases !== null)
                     <div class="flex-item">
                         <div class="small-box bg-red">
                             <div class="inner">
@@ -68,4 +68,9 @@
             </div>
         </div>
     </div>
+    <style>
+        .small-box-footer{
+            display: none !important;
+        }
+    </style>
 @endsection
