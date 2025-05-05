@@ -8,7 +8,7 @@
         <div class="panel-heading">
             @lang('global.app_create')
         </div>
-        
+
         <div class="panel-body">
             <!-- <div class="row">
                 <div class="col-xs-12 form-group">
@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    {!! Form::submit(trans('global.app_save'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit('Send Invite Email', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
 @stop
 

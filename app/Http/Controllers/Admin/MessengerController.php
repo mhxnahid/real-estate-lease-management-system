@@ -165,6 +165,7 @@ class MessengerController extends Controller
      */
     public function destroy(MessengerTopic $topic)
     {
+        return;
         $user = Auth::user();
         if ($topic->receiver->id != $user->id && $topic->sender->id != $user->id) {
             return abort(401);

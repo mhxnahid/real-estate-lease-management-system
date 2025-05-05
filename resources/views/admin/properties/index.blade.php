@@ -6,17 +6,17 @@
     @can('property_create')
     <p>
         <a href="{{ route('admin.properties.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
-        
+
     </p>
     @endcan
 
-    <p>
+    {{-- <p>
         <ul class="list-inline">
             <li><a href="{{ route('admin.properties.index') }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('global.app_all')</a></li> |
             <li><a href="{{ route('admin.properties.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('global.app_trash')</a></li>
         </ul>
-    </p>
-    
+    </p> --}}
+
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -41,7 +41,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($properties) > 0)
                         @foreach ($properties as $property)
@@ -102,7 +102,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('property_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.properties.mass_destroy') }}'; @endif

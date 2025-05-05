@@ -19,7 +19,7 @@
                             </a>
                         </div>
                         <div class="col-xs-2 text-right">{{ $topic->sent_at->diffForHumans() }}</div>
-                        <div class="col-xs-1 text-center">
+                        {{-- <div class="col-xs-1 text-center">
                             {!! Form::open(array(
                                     'style' => 'display: inline-block;',
                                     'method' => 'DELETE',
@@ -27,7 +27,7 @@
                                     'route' => ['admin.messenger.destroy', $topic->id])) !!}
                             {!! Form::submit(trans('global.app_delete'), array('class' => 'btn btn-xs btn-danger')) !!}
                             {!! Form::close() !!}
-                        </div>
+                        </div> --}}
                     </div>
                 @empty
                     <div class="row list-group-item">

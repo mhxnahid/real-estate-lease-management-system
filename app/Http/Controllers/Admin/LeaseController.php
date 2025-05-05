@@ -18,7 +18,9 @@ class LeaseController extends Controller
         $leases = Lease::with(['property', 'tenant', 'landlord'])
         ->where('tenant_id', auth()->user()->id)
         ->orWhere('landlord_id', auth()->user()->id)
-        ->orderBy('lease_start')->get();
+        ->orderBy('created_at', 'desc')
+        ->orderBy( 'lease_start', 'asc')
+        ->get();
 
         return view('admin.leases.index', compact('leases'));
     }

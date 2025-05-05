@@ -6,17 +6,17 @@
     @can('document_create')
     <p>
         <a href="{{ route('admin.documents.create') }}" class="btn btn-success">@lang('global.app_add_new')</a>
-        
+
     </p>
     @endcan
 
-    <p>
+    {{-- <p>
         <ul class="list-inline">
             <li><a href="{{ route('admin.documents.index') }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('global.app_all')</a></li> |
             <li><a href="{{ route('admin.documents.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('global.app_trash')</a></li>
         </ul>
-    </p>
-    
+    </p> --}}
+
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -42,7 +42,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($documents) > 0)
                         @foreach ($documents as $document)
@@ -101,7 +101,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('document_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.documents.mass_destroy') }}'; @endif

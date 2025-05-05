@@ -9,7 +9,7 @@
         <div class="panel-heading">
             @lang('global.app_create')
         </div>
-        
+
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 form-group">
@@ -61,7 +61,8 @@
             </div>
         <div class="row">
             <div class="col-xs-12 form-group">
-                {!! Form::label('document_ref', trans('global.leases.fields.document_ref').'', ['class' => 'control-label']) !!}
+                <div>Upload a lease agrement document that clearly states the necessary data of the property and the lease terms. The terms can't be changed later.</div>
+                {!! Form::label('document_ref', trans('global.leases.fields.document_ref').'*', ['class' => 'control-label']) !!}
                 {!! Form::file('document_ref', ['class' => 'form-control', 'required' => '']) !!}
                 <p class="help-block"></p>
                 @if($errors->has('document_ref'))

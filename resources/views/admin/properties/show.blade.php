@@ -28,14 +28,14 @@
                 </div>
             </div><!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    
+
 <li role="presentation" class="active"><a href="#documents" aria-controls="documents" role="tab" data-toggle="tab">Documents</a></li>
 <li role="presentation" class=""><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
-    
+
 <div role="tabpanel" class="tab-pane active" id="documents">
     @can('document_create')
     <a href="{{ route('admin.documents.create') }}" class="open-pop-btn my-2 btn btn-success">@lang('global.app_add_new')</a>
@@ -44,7 +44,7 @@
     <thead>
         <tr>
             <th>@lang('global.documents.fields.property')</th>
-                        <th>@lang('global.documents.fields.user')</th>
+                        {{-- <th>@lang('global.documents.fields.user')</th> --}}
                         <th>@lang('global.documents.fields.document')</th>
                         <th>@lang('global.documents.fields.name')</th>
                         @if( request('show_deleted') == 1 )
@@ -59,8 +59,8 @@
         @if (count($documents) > 0)
             @foreach ($documents as $document)
                 <tr data-entry-id="{{ $document->id }}">
-                    <td field-key='property'>{{ $document->property->name or '' }}</td>
-                                <td field-key='user'>{{ $document->user->name or '' }}</td>
+                    <td field-key='property'>{{ $document->property->name }}</td>
+                                {{-- <td field-key='user'>{{ $document->user->name }}</td> --}}
                                 <td field-key='document'>@if($document->document)<a href="{{ asset(env('UPLOAD_PATH').'/' . $document->document) }}" target="_blank">Download file</a>@endif</td>
                                 <td field-key='name'>{{ $document->name }}</td>
                                 @if( request('show_deleted') == 1 )
@@ -117,7 +117,7 @@
     <thead>
         <tr>
             <th width="20%">@lang('global.notes.fields.property')</th>
-                        <th width="10%">@lang('global.notes.fields.user')</th>
+                        {{-- <th width="10%">@lang('global.notes.fields.user')</th> --}}
                         <th>@lang('global.notes.fields.note-text')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
@@ -131,8 +131,8 @@
         @if (count($notes) > 0)
             @foreach ($notes as $note)
                 <tr data-entry-id="{{ $note->id }}">
-                    <td field-key='property'>{{ $note->property->name or '' }}</td>
-                                <td field-key='user'>{{ $note->user->name or '' }}</td>
+                    <td field-key='property'>{{ $note->property->name }}</td>
+                                {{-- <td field-key='user'>{{ $note->user->name }}</td> --}}
                                 <td field-key='note_text'>{!! $note->note_text !!}</td>
                                 @if( request('show_deleted') == 1 )
                                 <td>

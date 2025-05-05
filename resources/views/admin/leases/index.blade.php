@@ -9,13 +9,13 @@
     </p>
     @endcan
 
-    <p>
+    {{-- <p>
         <ul class="list-inline">
             <li><a href="{{ route('admin.leases.index') }}" style="{{ request('show_deleted') == 1 ? '' : 'font-weight: 700' }}">@lang('global.app_all')</a></li> |
             <li><a href="{{ route('admin.leases.index') }}?show_deleted=1" style="{{ request('show_deleted') == 1 ? 'font-weight: 700' : '' }}">@lang('global.app_trash')</a></li>
         </ul>
-    </p>
-    
+    </p> --}}
+
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -36,6 +36,7 @@
                         <th>@lang('global.leases.fields.lease_start')</th>
                         <th>@lang('global.leases.fields.lease_end')</th>
                         <th>@lang('global.leases.fields.tenant_accepted')</th>
+                        <th>Created</th>
                         <th>@lang('global.app_view')</th>
                         @if( request('show_deleted') == 1 )
                         <th>&nbsp;</th>
@@ -44,7 +45,7 @@
                         @endif
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     @if (count($leases) > 0)
                         @foreach ($leases as $lease)
@@ -59,6 +60,7 @@
                                 <td field-key='lease_start'>{{ $lease->lease_start }}</td>
                                 <td field-key='lease_end' style="color: {{ $lease->lease_end && $lease->lease_end < now() ? 'red' : 'inherit' }}">{{ $lease->lease_end }}</td>
                                 <td field-key='tenant_accepted'>{{ $lease->tenant_accepted ? 'Yes' : 'No' }}</td>
+                                <td field-key='created'>{{ $lease->created_at->format('d/m/Y h:m:s') }}</td>
                                 <td>
                                     <a href="{{ route('admin.leases.show', [$lease->id]) }}" class="btn btn-xs btn-primary">@lang('global.app_view')</a>
                                 </td>
@@ -108,7 +110,7 @@
     </div>
 @stop
 
-@section('javascript') 
+@section('javascript')
     <script>
         @can('_lease_delete')
             @if ( request('show_deleted') != 1 ) window.route_mass_crud_entries_destroy = '{{ route('admin.leases.mass_destroy') }}'; @endif
